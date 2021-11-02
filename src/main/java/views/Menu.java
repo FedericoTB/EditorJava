@@ -101,9 +101,16 @@ public class Menu {
         mFOpen.addActionListener(e -> {
             try {
                 func.getDocuments().put(func.getDocuments().size()+1,func.openFile());
+                System.out.println(func.getDocuments().get(func.getDocuments().size()).getContent());
                 container.getDocumentPane().addTab(func.getDocuments().get(func.getDocuments().size()).getTitle(),new JCodeArea(func.getDocuments().get(func.getDocuments().size())));
             } catch (IOException ex) {
                 ex.printStackTrace();
+            }
+        });
+        mFSave.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                func.getDocuments().get(container.getDocumentPane().getSelectedIndex()+1).setContent(((JCodeArea)container.getDocumentPane().getSelectedComponent()).getJTextArea().getText());
             }
         });
         mFSaveAs.addActionListener(new ActionListener() {
@@ -130,6 +137,15 @@ public class Menu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 container.dispose();
+            }
+        });
+        mTRun.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JCodeArea jCodeArea =(JCodeArea) container.getDocumentPane().getSelectedComponent();
+                func.save(func.getDocuments().get(container.getDocumentPane().getSelectedIndex()+1),jCodeArea.getJTextArea());
+                System.out.println(container.getDocumentPane().getSelectedComponent());
+                func.play(func.getDocuments().get(container.getDocumentPane().getSelectedIndex()+1),container.getConsoleTextArea());
             }
         });
 

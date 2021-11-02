@@ -7,7 +7,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.print.PrinterException;
 import java.io.*;
 import java.util.HashMap;
-import java.util.List;
 
 public class Functions {
     private static Functions instance;
@@ -47,9 +46,10 @@ public class Functions {
             tempDocument = new Document(fileChooser.getSelectedFile());
         return tempDocument;
     }
-    /* public static void save(String cont){
-        tempDocument.setContent(cont);
-    }*/
+    public static void save(Document document,JTextArea jTextArea) {
+        document.setContent(jTextArea.getText());
+    }
+
     public void saveAs(Document document) throws IOException {
         JFileChooser saveChooser = new JFileChooser();
         saveChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
@@ -66,9 +66,23 @@ public class Functions {
 
     }
     public void printFile(JCodeArea jTextArea) throws PrinterException {
-        jTextArea.getjTextArea().print();
+        jTextArea.getJTextArea().print();
     }
+    public void play(Document document, JTextArea terminal){
 
+        try {
+
+            String command = "cmd.exe /C java "+document.getFile().toString();
+            Process process = Runtime.getRuntime().exec(command);
+            BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            while((line=br.readLine())!=null){
+                terminal.setText(terminal.getText()+"\n"+line+"\n");
+            }
+        } catch (IOException e) {
+            terminal.setText(e.getMessage());
+        }
+    }
     public HashMap<Integer, Document> getDocuments() {
         return documents;
     }

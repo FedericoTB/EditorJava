@@ -70,5 +70,10 @@ public class Document {
 
     public void setContent(String content) {
         this.content = content;
+        try {
+            fileWriter(this.file,this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

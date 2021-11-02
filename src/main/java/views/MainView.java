@@ -13,7 +13,6 @@ import controllers.Functions;
 public class MainView extends JFrame {
     private Functions func;
     private JPanel mainPanel;
-    private JTree navTree;
     private Menu menu;
     private JMenuBar menuBar;
 
@@ -38,10 +37,6 @@ public class MainView extends JFrame {
         mainPanel = new JPanel();
         menu = new Menu(this);
 
-
-        navTree = new JTree();
-        navTree.setBorder(new EtchedBorder());
-
         documentPane = new JTabbedPane();
         documentTextArea = new JCodeArea(func.getDocuments().get(1));
         documentPane.add(func.getDocuments().get(1).getTitle()+func.getDocuments().get(1).getType(),documentTextArea);
@@ -56,7 +51,6 @@ public class MainView extends JFrame {
         mainPanel.setLayout(new BorderLayout());
         this.add(mainPanel);
         this.setJMenuBar(menu.getMenuBar());
-        mainPanel.add(navTree,BorderLayout.WEST);
         mainPanel.add(documentPane,BorderLayout.CENTER);
         mainPanel.add(consoleTextArea,BorderLayout.SOUTH);
 
@@ -77,5 +71,13 @@ public class MainView extends JFrame {
 
     public void setDocumentPane(JTabbedPane documentPane) {
         this.documentPane = documentPane;
+    }
+
+    public JTextArea getConsoleTextArea() {
+        return consoleTextArea;
+    }
+
+    public void setConsoleTextArea(JTextArea consoleTextArea) {
+        this.consoleTextArea = consoleTextArea;
     }
 }
